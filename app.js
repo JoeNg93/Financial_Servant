@@ -4,6 +4,13 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const moneySpentList = require('./money_spent.json');
+
+const addNewSpending = (spending) => {
+  moneySpentList.push(spending);
+  fs.writeFile('./money_spent.json', JSON.stringify(moneySpentList));
+};
+
 app = express();
 
 app.set('port', process.env.PORT || 5000);

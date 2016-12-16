@@ -1,0 +1,22 @@
+[
+  {
+    "date": "2016-12-15T22:00:00.000Z",
+    "amount": 8.76,
+    "description": "Buy stuff at Sale 24h"
+  },
+  {
+    "date": "2016-12-15T22:00:00.000Z",
+    "amount": 29,
+    "description": "Gym membership payment"
+  },
+  {
+    "date": "2016-12-15T22:00:00.000Z",
+    "amount": 0.91,
+    "description": "Lunch at school"
+  },
+  {
+    "date": "2016-12-16T13:04:40.995Z",
+    "amount": 0.91,
+    "description": "Lunch at school"
+  }
+]
