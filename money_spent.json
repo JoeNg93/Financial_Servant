@@ -1,21 +1,21 @@
 [
   {
-    "date": "2016-12-15T22:00:00.000Z",
+    "date": "2016/12/15",
     "amount": 8.76,
     "description": "Buy stuff at Sale 24h"
   },
   {
-    "date": "2016-12-15T22:00:00.000Z",
+    "date": "2016/12/15",
     "amount": 29,
     "description": "Gym membership payment"
   },
   {
-    "date": "2016-12-15T22:00:00.000Z",
+    "date": "2016/12/15",
     "amount": 0.91,
     "description": "Lunch at school"
   },
   {
-    "date": "2016-12-16T13:04:40.995Z",
+    "date": "2016/12/16",
     "amount": 0.91,
     "description": "Lunch at school"
   }
