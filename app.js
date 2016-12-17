@@ -3,6 +3,7 @@ const express = require('express');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const path = require('path');
+const session = require('client-sessions');
 
 let moneySpentList = [];
 
@@ -27,6 +28,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Server static file
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Session
+app.use(session({
+  cookieName: 'session',
+  secret: 'dsfasdf1239@%*@#*@zzcb##<>:P',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 *1000
+}));
 
 app.get('/', (req, res) => {
   fs.readFile('./public/json/money_spent.json', 'utf-8', (err, data) => {
