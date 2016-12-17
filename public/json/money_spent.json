@@ -18,5 +18,15 @@
     "date": "2016-12-15T22:00:00.000Z",
     "amount": 0.91,
     "description": "Lunch at school"
+  },
+  {
+    "amount": 20,
+    "description": "Buy stuff at Lidl",
+    "date": "2016-12-15T22:00:00.000Z"
+  },
+  {
+    "amount": 12.95,
+    "description": "Buy stuff at Sale 24h",
+    "date": "2016-12-17T18:47:47.485Z"
   }
 ]
