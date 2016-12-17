@@ -4,3 +4,6 @@
 .table-hover > tbody > tr:hover {
   background-color: #D2D2D2;
 }
+#btnAddSpending {
+  display: block;
+}
