@@ -18,5 +18,10 @@
     "date": "2016-12-15T22:00:00.000Z",
     "amount": 0.91,
     "description": "Lunch at school"
+  },
+  {
+    "amount": 5,
+    "description": "Test",
+    "date": "2016-12-17T11:48:50.703Z"
   }
 ]

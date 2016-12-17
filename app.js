@@ -8,7 +8,7 @@ let moneySpentList = [];
 
 const addNewSpending = (spending) => {
   moneySpentList.push(spending);
-  fs.writeFile('./money_spent.json', JSON.stringify(moneySpentList));
+  fs.writeFile('./public/json/money_spent.json', JSON.stringify(moneySpentList));
 };
 
 hbs.registerHelper('getDate', (dateObject) => {
@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  fs.readFile('./money_spent.json', 'utf-8', (err, data) => {
+  fs.readFile('./public/json/money_spent.json', 'utf-8', (err, data) => {
     moneySpentList = JSON.parse(data);
     moneySpentList.forEach((eachSpending) => {
       eachSpending.date = new Date(eachSpending.date);
