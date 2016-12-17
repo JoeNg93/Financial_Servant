@@ -34,7 +34,7 @@ app.use(session({
   cookieName: 'session',
   secret: 'dsfasdf1239@%*@#*@zzcb##<>:P',
   duration: 30 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000
+  activeDuration: 5 * 30 * 1000
 }));
 
 const requireLogin = (req, res, next) => {
@@ -86,7 +86,7 @@ app.post('/login', (req, res) => {
     username: req.body.username,
     password: req.body.password,
   };
-  fs.readFile('user_accs.json', 'utf8', (err, data) => {
+  fs.readFile('./user_accs.json', 'utf8', (err, data) => {
     if (err) {
       throw err;
       res.send('Error. Sorry');
