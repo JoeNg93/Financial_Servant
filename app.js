@@ -38,6 +38,10 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/addSpending', (req, res) => {
+  res.render('add_spending.hbs');
+});
+
 app.listen(app.get('port'), () => {
   console.log('Listening on port', app.get('port'));
 });

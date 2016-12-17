@@ -7,3 +7,10 @@
 #btnAddSpending {
   display: block;
 }
+th {
+  background-color: #6C5B7B;
+  color: white;
+}
+a.btn {
+  background-color: #355C7D;
+}
