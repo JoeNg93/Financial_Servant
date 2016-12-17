@@ -11,40 +11,16 @@
 </head>
 <body>
 <div class="container">
-  <div class="row">
-    <div class="col-xs-12" style="text-align: center">
-      <h1>Financial Servant</h1>
+  <div class="row" style="text-align: center">
+    <div class="col-xs-12">
+      <h1>Sorry :(. I need your identity in order to serve you best</h1>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each moneySpentList}}
-            <tr>
-              <td>{{getDate this.date}}</td>
-              <td>{{this.amount}}</td>
-              <td>{{this.description}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <a href="/addSpending" class="btn btn-primary" id="btnAddSpending">Add Spending</a>
+    <div class="col-xs-6 col-xs-offset-3">
+      <a href="/login" class="btn btn-primary" id="btnLogin">Click Here To Login</a>
     </div>
   </div>
 </div>
-<script src="/js/jquery-3.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

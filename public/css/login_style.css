@@ -1,11 +1,10 @@
-
 .row {
   margin: 20px;
 }
 #btnLogin {
   width: 100%;
   display: block;
-  background-color: #2A363B;
+  background: #2A363B;
   color: white;
   font-size: 16px;
 }
