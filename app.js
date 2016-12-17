@@ -82,28 +82,32 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const user = {
-    username: req.body.username,
-    password: req.body.password,
-  };
-  fs.readFile('./user_accs.json', 'utf8', (err, data) => {
-    if (err) {
-      throw err;
-      res.send('Error. Sorry');
-    } else {
-      const userInfo = JSON.parse(data);
-      userInfo.forEach((eachUser) => {
-        if (eachUser.username === user.username) {
-          if (eachUser.password === user.password) {
-            req.session.user = user;
-            res.redirect('/showSpending');
+  if (req.body.username && req.body.password) {
+    const user = {
+      username: req.body.username,
+      password: req.body.password,
+    };
+    fs.readFile('./user_accs.json', 'utf8', (err, data) => {
+      if (err) {
+        throw err;
+        res.send('Error. Sorry');
+      } else {
+        const userInfo = JSON.parse(data);
+        userInfo.forEach((eachUser) => {
+          if (eachUser.username === user.username) {
+            if (eachUser.password === user.password) {
+              req.session.user = user;
+              res.redirect('/showSpending');
+            }
+          } else {
+            res.redirect('/');
           }
-        } else {
-          res.redirect('/');
-        }
-      });
-    }
-  });
+        });
+      }
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/logout', (req, res) => {
