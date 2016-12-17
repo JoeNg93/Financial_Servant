@@ -42,6 +42,16 @@ app.get('/addSpending', (req, res) => {
   res.render('add_spending.hbs');
 });
 
+app.post('/addSpending', (req, res) => {
+  const newSpending = {
+    amount: Number(req.body.amount),
+    description: req.body.description,
+  };
+  newSpending.date = req.body.date ? new Date(req.body.date) : new Date();
+  addNewSpending(newSpending);
+  res.redirect('/');
+});
+
 app.listen(app.get('port'), () => {
   console.log('Listening on port', app.get('port'));
 });

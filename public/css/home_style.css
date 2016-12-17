@@ -6,6 +6,7 @@
 }
 #btnAddSpending {
   display: block;
+  font-size: 16px;
 }
 th {
   background-color: #6C5B7B;
