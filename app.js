@@ -12,6 +12,30 @@ const addNewSpending = (spending) => {
   fs.writeFile('./public/json/money_spent.json', JSON.stringify(moneySpentList));
 };
 
+const getCategories = () => {
+  return new Promise((resolve, reject) => {
+    let categories = new Set();
+    fs.readFile('./public/json/money_spent.json', 'utf8', (err, data) => {
+      JSON.parse(data).forEach((eachSpending) => {
+        categories.add(eachSpending.category);
+      });
+      resolve(Array.from(categories));
+    });
+  });
+};
+
+const getMoneySpentList = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile('./public/json/money_spent.json', 'utf8', (err, data) => {
+      let moneySpentList = JSON.parse(data);
+      moneySpentList.forEach((eachSpending) => {
+        eachSpending.date = new Date(eachSpending.date);
+      });
+      resolve(moneySpentList);
+    });
+  });
+};
+
 hbs.registerHelper('getDate', (dateObject) => {
   return dateObject.toDateString();
 });
@@ -54,13 +78,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/addSpending', requireLogin, (req, res) => {
-  res.render('add_spending.hbs');
+  getCategories().then((categories) => {
+    res.render('add_spending.hbs', {categories});
+  });
 });
 
 app.post('/addSpending', requireLogin, (req, res) => {
   const newSpending = {
     amount: Number(req.body.amount),
     description: req.body.description,
+    category: req.body.category,
   };
   newSpending.date = req.body.date ? new Date(req.body.date) : new Date();
   addNewSpending(newSpending);
@@ -68,12 +95,15 @@ app.post('/addSpending', requireLogin, (req, res) => {
 });
 
 app.get('/showSpending', requireLogin, (req, res) => {
-  fs.readFile('./public/json/money_spent.json', 'utf8', (err, data) => {
-    moneySpentList = JSON.parse(data);
-    moneySpentList.forEach((eachSpending) => {
-      eachSpending.date = new Date(eachSpending.date);
-    });
-    res.render('show_spending.hbs', {moneySpentList,});
+  let totalMoney = 0;
+  getMoneySpentList().then((moneySpent) => {
+    if (req.query.category) {
+      moneySpentList = moneySpent.filter(eachSpending => eachSpending.category === req.query.category);
+    } else {
+      moneySpentList = moneySpent;
+    }
+    moneySpentList.forEach(eachSpending => totalMoney += eachSpending.amount);
+    res.render('show_spending.hbs', { moneySpentList, totalMoney });
   });
 });
 
@@ -108,6 +138,12 @@ app.post('/login', (req, res) => {
   } else {
     res.redirect('/');
   }
+});
+
+app.get('/categories', (req, res) => {
+  getCategories().then((categories) => {
+    res.json(categories);
+  });
 });
 
 app.get('/logout', (req, res) => {
