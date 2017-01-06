@@ -15,11 +15,8 @@ const addNewSpending = (spending) => {
 const getCategories = () => {
   return new Promise((resolve, reject) => {
     let categories = new Set();
-    fs.readFile('./public/json/money_spent.json', 'utf8', (err, data) => {
-      JSON.parse(data).forEach((eachSpending) => {
-        categories.add(eachSpending.category);
-      });
-      resolve(Array.from(categories));
+    fs.readFile('./public/json/categories.json', 'utf8', (err, data) => {
+      resolve(JSON.parse(data));
     });
   });
 };
@@ -103,6 +100,7 @@ app.get('/showSpending', requireLogin, (req, res) => {
       moneySpentList = moneySpent;
     }
     moneySpentList.forEach(eachSpending => totalMoney += eachSpending.amount);
+    totalMoney = Math.round(totalMoney);
     res.render('show_spending.hbs', { moneySpentList, totalMoney });
   });
 });
@@ -128,6 +126,9 @@ app.post('/login', (req, res) => {
             if (eachUser.password === user.password) {
               req.session.user = user;
               res.redirect('/showSpending');
+            }
+            else {
+              res.redirect('/');
             }
           } else {
             res.redirect('/');
