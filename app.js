@@ -101,7 +101,9 @@ app.get('/showSpending', requireLogin, (req, res) => {
     }
     moneySpentList.forEach(eachSpending => totalMoney += eachSpending.amount);
     totalMoney = Math.round(totalMoney);
-    res.render('show_spending.hbs', { moneySpentList, totalMoney });
+    getCategories().then((categoryList) => {
+      res.render('show_spending.hbs', { moneySpentList, totalMoney, categoryList });
+    })
   });
 });
 

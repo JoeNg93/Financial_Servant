@@ -22,6 +22,22 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12" style="text-align: center">
+      <h2>Category</h2>
+     <div class="dropdown" style="margin-top: 20px;">
+       <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="background-color: #6C5B7B">
+         Choose Categories
+       <span class="caret"></span></button>
+       <ul class="dropdown-menu" style="left: 40%">
+         <li><a href="/showSpending">All</a></li>
+         {{#each categoryList}}
+           <li><a href="/showSpending?category={{this}}">{{this}}</a></li>
+         {{/each}}
+       </ul>
+     </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-12">
 
     </div>
