@@ -25,17 +25,14 @@ npm install
 ```
 
 ## Demo
+### Login 
 ![Login](./demo/Login.gif)
-<p style="text-align: center; font-style: italic">Login</p>
 
-
+### Change Category
 ![Change Category](./demo/Change_Category.gif)
-<p style="text-align: center; font-style: italic">Change Category</p>
 
-
+### Add New Spending
 ![Add Spending](./demo/Add_Spending.gif)
-<p style="text-align: center; font-style: italic">Add New Spending</p>
 
-
+### Logout
 ![Logout](./demo/Logout.gif)
-<p style="text-align: center; font-style: italic">Logout</p>
