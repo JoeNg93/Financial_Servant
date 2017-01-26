@@ -9,13 +9,13 @@ let moneySpentList = [];
 
 const addNewSpending = (spending) => {
   moneySpentList.push(spending);
-  fs.writeFile('./public/json/money_spent.json', JSON.stringify(moneySpentList));
+  fs.writeFile('./money_spent.json', JSON.stringify(moneySpentList));
 };
 
 const getCategories = () => {
   return new Promise((resolve, reject) => {
     let categories = new Set();
-    fs.readFile('./public/json/categories.json', 'utf8', (err, data) => {
+    fs.readFile('./categories.json', 'utf8', (err, data) => {
       resolve(JSON.parse(data));
     });
   });
@@ -23,7 +23,7 @@ const getCategories = () => {
 
 const getMoneySpentList = () => {
   return new Promise((resolve, reject) => {
-    fs.readFile('./public/json/money_spent.json', 'utf8', (err, data) => {
+    fs.readFile('./money_spent.json', 'utf8', (err, data) => {
       let moneySpentList = JSON.parse(data);
       moneySpentList.forEach((eachSpending) => {
         eachSpending.date = new Date(eachSpending.date);
