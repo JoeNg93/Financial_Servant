@@ -8,8 +8,8 @@ const session = require('client-sessions');
 let moneySpentList = [];
 
 const addNewSpending = (spending) => {
-  moneySpentList.push(spending);
-  fs.writeFile('./money_spent.json', JSON.stringify(moneySpentList));
+    moneySpentList.push(spending);
+    fs.writeFile('./money_spent.json', JSON.stringify(moneySpentList));
 };
 
 const getCategories = () => {
