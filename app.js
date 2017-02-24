@@ -4,12 +4,13 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('client-sessions');
+const crypto = require('crypto');
 
 let moneySpentList = [];
 
 const addNewSpending = (spending) => {
-    moneySpentList.push(spending);
-    fs.writeFile('./money_spent.json', JSON.stringify(moneySpentList));
+  moneySpentList.push(spending);
+  fs.writeFile('./money_spent.json', JSON.stringify(moneySpentList));
 };
 
 const getCategories = () => {
@@ -33,6 +34,49 @@ const getMoneySpentList = () => {
   });
 };
 
+const getUsers = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile('./user_accs.json', 'utf8', (err, users) => {
+      if (err) {
+        reject(new Error("Cannot read user info in db"));
+      }
+      resolve(JSON.parse(users));
+    });
+  });
+};
+
+const checkUsername = (username, users) => {
+  return new Promise((resolve, reject) => {
+    let user = users.find(eachUser => eachUser.username == username);
+    if (user) {
+      resolve(user);
+    }
+    reject(new Error("Wrong username"));
+  });
+};
+
+const checkPassword = (userInfo, pass) => {
+  return new Promise((resolve, reject) => {
+    let saltHashPass = crypto.createHmac('sha256', userInfo.salt)
+      .update(pass)
+      .digest('hex');
+    if (saltHashPass == userInfo.password) {
+      resolve();
+    }
+    reject(new Error("Wrong password"));
+  });
+};
+
+const isAuthenticated = (username, pass) => {
+  return new Promise((resolve, reject) => {
+    getUsers()
+      .then(users => checkUsername(username, users))
+      .then(userInfo => checkPassword(userInfo, pass))
+      .then(resolve)
+      .catch(err => reject(new Error(err.message)));
+  });
+};
+
 hbs.registerHelper('getDate', (dateObject) => {
   return dateObject.toDateString();
 });
@@ -45,7 +89,7 @@ app.set('view engine', 'hbs');
 
 // bodyParser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Server static file
 app.use(express.static(path.join(__dirname, 'public')));
@@ -54,8 +98,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   cookieName: 'session',
   secret: 'dsfasdf1239@%*@#*@zzcb##<>:P',
-  duration: 30 * 60 * 1000,
-  activeDuration: 5 * 30 * 1000
+  duration: 30 * 60 * 1000, // 30 mins
+  activeDuration: 5 * 30 * 1000 // get 5 mins more for each active
 }));
 
 const requireLogin = (req, res, next) => {
@@ -76,7 +120,7 @@ app.get('/', (req, res) => {
 
 app.get('/addSpending', requireLogin, (req, res) => {
   getCategories().then((categories) => {
-    res.render('add_spending.hbs', {categories});
+    res.render('add_spending.hbs', { categories });
   });
 });
 
@@ -113,33 +157,17 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   if (req.body.username && req.body.password) {
-    const user = {
-      username: req.body.username,
-      password: req.body.password,
-    };
-    fs.readFile('./user_accs.json', 'utf8', (err, data) => {
-      if (err) {
-        throw err;
-        res.send('Error. Sorry');
-      } else {
-        const userInfo = JSON.parse(data);
-        userInfo.forEach((eachUser) => {
-          if (eachUser.username === user.username) {
-            if (eachUser.password === user.password) {
-              req.session.user = user;
-              res.redirect('/showSpending');
-            }
-            else {
-              res.redirect('/');
-            }
-          } else {
-            res.redirect('/');
-          }
-        });
-      }
-    });
-  } else {
-    res.redirect('/');
+    isAuthenticated(req.body.username, req.body.password)
+      .then(() => {
+        req.session.user = {
+          username: req.body.username,
+          password: req.body.password
+        };
+        res.redirect('/showSpending');
+      })
+      .catch((err) => {
+        res.redirect('/');
+      });
   }
 });
 
