@@ -4,7 +4,7 @@ This project is my personal project. The motivation for this project is that I n
 
 This project is currently in development. New features will be added in the near future.
 
-Because I am the only one who use this application so my data will be store in .json file. In addition, my application also has a login feature in order to scale it to multiple users in the future.
+Because I am the only one who use this application so my data will be store in .json file. In addition, my application also has a login feature (using salt hash authentication method) in order to scale it to multiple users in the future.
 
 ## Getting Started
 
