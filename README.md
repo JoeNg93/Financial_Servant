@@ -24,6 +24,19 @@ Install package dependencies
 npm install
 ```
 
+Create your own **user_accs.json** file in the same directory with **app.js**
+```
+[
+  {
+    "username": "your_user_name",
+    "salt": "your_salt_generated_randomly",
+    "password": "your_password_after_hashing_and_combining_with_salt"
+  }
+]
+```
+
+Delete everything inside **money_spent.json**
+
 ## Demo
 ### Login 
 ![Login](./demo/Login.gif)
